@@ -1,0 +1,2 @@
+export const GET_STUDENTS = 'GET_STUDENTS';
+export const GET_COMPANIES = 'GET_COMPANIES';

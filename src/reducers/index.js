@@ -1,9 +1,13 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+import { reducer as form } from 'redux-form';
 
-import pokemons from './pokemons'
+import students from './students';
+import companies from './companies';
 
 const appReducer = {
-  // reducers here
-}
+    form,
+    students,
+    companies
+};
 
-export default appReducer
+export default appReducer;

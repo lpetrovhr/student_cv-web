@@ -1,6 +1,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path')
 const webpack = require('webpack')
+
+const extractCSS = new ExtractTextPlugin('[name].fonts.css');
+const extractSCSS = new ExtractTextPlugin('[name].styles.css');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -34,7 +39,14 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('development'),
       __API_URL__: JSON.stringify('localhost:3000/')
     }),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    extractCSS,
+    extractSCSS,
+    new CopyWebpackPlugin([
+        { from: './public/img', to: 'img' }
+      ],
+        { copyUnmodified: false }
+    )
   ],
   module: {
     rules: [
@@ -47,32 +59,36 @@ module.exports = {
         use: 'json'
       }, {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true, // default is false
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]--[local]--[hash:base64:8]'
-            }
-          },
-          'postcss-loader'
-        ]
+        use: extractCSS.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
       }, {
-        test: /\.scss$/,
-        loaders: [
-          'style-loadernp',
-          'css-loader?importLoaders=1&modules&localIdentName=[local]--[hash:base64:8]',
-          'sass-loader',
+        test: /\.(scss)$/,
+        use: ['css-hot-loader'].concat(extractSCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: { alias: { '../img': '../public/img' } }
+            },
+            {
+              loader: 'sass-loader'
+            }
+          ]
+        }))
+      }, {
+        test: /\.(png|jpg|jpeg|gif|ico)$/,
+        use: [
           {
-            loader: 'sass-resources-loader',
+            // loader: 'url-loader'
+            loader: 'file-loader',
             options: {
-              resources: './src/styles/resources.scss'
+              name: './img/[name].[hash].[ext]'
             }
           }
-        ]}, {
+        ]
+      }, {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         use: 'url-loader?limit=10000&mimetype=application/font-woff'
       }, {

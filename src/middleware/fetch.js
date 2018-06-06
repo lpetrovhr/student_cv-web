@@ -39,5 +39,5 @@ const getApi = path =>
   fetchApi(path)
 
 export default {
-  getApi,
+  get: getApi,
 }
