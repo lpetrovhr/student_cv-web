@@ -1,0 +1,217 @@
+.main-container {
+    margin-top: 15px;
+}
+
+.profile {
+    min-height: 355px;
+    display: inline-block;
+}
+
+figcaption {
+    .ratings {
+        margin-top:20px;
+
+        a {
+            color:#f1c40f;
+            font-size:11px;
+
+            &:hover {
+                color:#f39c12;
+                text-decoration:none;
+            }
+        }
+    }
+}
+
+.divider {
+    border-top:1px solid rgba(0,0,0,0.1);
+}
+
+.emphasis {
+    border-top: 4px solid transparent;
+
+    &:hover {
+        border-top: 4px solid #1abc9c;
+    }
+
+    h2
+    {
+        margin-bottom:0;
+    }
+}
+
+span {
+    &.tags {
+        
+        border-radius: 2px;
+        color: #f5f5f5;
+        font-weight: bold;
+        padding: 2px 4px;
+        margin: 0 3px;
+
+        &--green {
+            background: #1abc9c;
+        }
+
+        &--blue {
+            background: #4d4dd4;     
+        }
+    }
+}
+
+.img-circle {
+    border-radius: 50%;
+    width: 100%;
+}
+
+.img-square {
+    width: 40%;
+    border-radius: 50%;
+    margin: 10px auto;
+}
+
+.card-actions {
+    span {
+        display: block;
+        width: 100px;
+        padding: .75rem 0;
+        margin: 0 !important;
+        text-align: center;
+        border: 0;
+        border-left: 1px solid;
+    }
+}
+
+.obavijest {
+    background-color: $blue;
+    color: #fff;
+}
+
+.praksa {
+    background-color: $cyan;
+    color: #fff;
+}
+
+.predavanje {
+    background-color: $teal;
+    color: #fff;
+}
+
+.radionica {
+    background-color: $yellow;
+    color: #fff;
+}
+
+.posao {
+    background-color: $indigo;
+    color: #fff;
+}
+
+.post-type-filter {
+    
+    .card-body {
+        text-align: center;
+    }
+
+    button {
+        margin: 0 10px;
+    }
+}
+
+.user-edit-card-body {
+    .row {
+        margin-bottom: 20px;
+    }
+}
+
+.main-navbar {
+    .nav-item {
+        a {
+            text-decoration: none;
+            color: #20a8d8;
+        }
+    }
+}
+
+/* bez problema se moze napraviti mixin od ovog */
+
+.activeUser {
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.inactiveUser {
+  height: 10px;
+  width: 10px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__input {
+  width: 236px;
+  height: 34px;
+  padding: 10px 20px;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.react-autosuggest__input--focused {
+  outline: none;
+}
+
+.react-autosuggest__input--open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: block;
+  position: absolute;
+  top: 33px;
+  width: 280px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #ddd;
+}
+
+.react-autosuggest__suggestion-match {
+  color: red;
+  font-weight: bold;
+}

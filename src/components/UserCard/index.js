@@ -12,21 +12,21 @@ const UserCard = ({ user, key, type }) => (
     type == 'company' ?
     <Col md="4">
         <Card>
-            <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+            <CardImg className="img-square img-responsive" top width="100%" src={require(`assets/images/avatars/microsoft-test.jpg`)} alt="Card image cap" />
             <CardBody>
                 <CardTitle>{user.companyName}</CardTitle>
-                <CardText>{user.info}</CardText>
-                <Link to={`/companies/${user.id}`}><Button color="primary">Info</Button></Link>
+                <CardText style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{user.info}</CardText>
+                <Link to={`/companies/${user.id}`}><Button color="primary" block>Info</Button></Link>
             </CardBody>
         </Card>
     </Col> : 
     <Col md="4">
         <Card>
-            <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+            <CardImg className="img-square img-responsive" top width="100%" src={require(`assets/images/avatars/test.png`)} alt="Card image cap" />
             <CardBody>
                 <CardTitle>{user.firstName} {user.lastName}</CardTitle>
                 <CardText>{user.cvLink ? user.cvLink : 'Student trenutno nema životopis'}</CardText>
-                <Link to={`/students/${user.id}`}><Button color="primary">Info</Button></Link>
+                <Link to={`/students/${user.id}`}><Button color="primary" block outline>Info</Button></Link>
             </CardBody>
         </Card>
     </Col>

@@ -8,11 +8,8 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter, Link } from 'react-router';
 import { fetchSingleStudent } from '../../actions/students';
-
-
-
 
 class SingleStudent extends Component {
 
@@ -31,59 +28,78 @@ class SingleStudent extends Component {
         dispatch(fetchSingleStudent(id));
     }
 
+    renderUserTags(tags) {
+        console.log(tags);
+        if (!tags || !tags.length) {
+            return <p>Korisnik nema tagova</p>;
+        }
+
+        return tags.map((tag, key) => 
+            <li key={key}>{tag.tagName}</li>
+        );
+    }
+
+    renderUserCategories(categories) {
+        if (!categories || !categories.length) {
+            return <p>Korisnik nema kategorija</p>;
+        }
+
+        return categories.map((category, key) =>
+            <span className="tags tags--blue" key={key}>{category.name}</span>
+        );
+    }
+
+    renderSocialLinks (social) {
+        if (!social || !social.length) {
+            return <div></div>;
+        }
+
+        return social.map((social, key) => 
+            <Col xs={12} sm={3} className="emphasis">
+                <a style={{textDecoration: "none"}} href={social.socialLink} target="__blank"><Button className={"btn-" + social.socialName.toLowerCase()} block> Prati me</Button></a>
+            </Col>
+        );
+    }
+
     render () {
         const { students } = this.props;
-        const student = students.data[0];
+        const rawStudent = students.toJS();
+        const student = rawStudent.students.data;
 
         return (
             <Container className="main-container" fluid>
                 <Row>
+                    {student ?
                     <Card>
                         <CardTitle className="card-header">{student.firstName} {student.lastName}</CardTitle>
                         <CardBody>
                             <Col md={12}>
-                                    <Row>
-                                    <Col xs={12} sm={8}>
-                                        <p><strong>About: </strong> Web Designer / UI. </p>
-                                        <p><strong>Hobbies: </strong> Read, out with friends, listen to music, draw and learn new things. </p>
-                                        <p><strong>Skills: </strong>
-                                            <span class="tags">html5</span>
-                                            <span class="tags">css3</span>
-                                            <span class="tags">jquery</span>
-                                            <span class="tags">bootstrap3</span>
-                                        </p>
-                                    </Col>
-                                    <Col xs={12} sm={4} className="text-center">
+                                <Row>
+                                    <Col xs={12} sm={3} md={3} className="text-center">
                                         <figure>
-                                            <img src="http://www.localcrimenews.com/wp-content/uploads/2013/07/default-user-icon-profile.png" alt="" class="img-circle img-responsive" />
+                                            <img src={require(`assets/images/avatars/test.png`)} alt="" className="img-circle img-responsive" />
                                         </figure>
                                     </Col>
-                                    </Row>
-                                    <Row className="divider text-center">
-                                        <Col xs={12} sm={3} className="emphasis">
-                                            <h2><strong> 20,7K </strong></h2>
-                                            <p><small>Followers</small></p>
-                                            <Button color="success" block><span className="fa fa-plus-circle"></span> Follow </Button>
-                                        </Col>
-                                        <Col xs={12} sm={3} className="emphasis">
-                                            <h2><strong>245</strong></h2>
-                                            <p><small>Following</small></p>
-                                            <Button color="info" block><span className="fa fa-user"></span> View Profile </Button>
-                                        </Col>
-                                        <Col xs={12} sm={3} className="emphasis">
-                                            <h2><strong>245</strong></h2>
-                                            <p><small>Following</small></p>
-                                            <Button color="info" block><span className="fa fa-user"></span> View Profile </Button>
-                                        </Col>
-                                        <Col xs={12} sm={3} className="emphasis">
-                                            <h2><strong>245</strong></h2>
-                                            <p><small>Following</small></p>
-                                            <Button color="info" block><span className="fa fa-user"></span> View Profile </Button>
-                                        </Col>
-                                    </Row>
+                                    <Col xs={12} sm={8}>
+                                        <p><strong>E-mail:</strong> <a href={"mailto:" + student.email}>{student.email}</a></p>
+                                        <p><strong>Zivotopis: </strong> <a href={student.cvLink}>{student.cvLink ? student.cvLink : "Student nema zivotopis"}</a></p>
+                                        <p><strong>Studijski program: </strong>
+                                            {this.renderUserCategories(student.categories)}
+                                        </p>
+                                        <p><strong>Uže područije interesa: </strong>
+                                            <ul>
+                                                {this.renderUserTags(student.tags)}
+                                            </ul>
+                                        </p>
+                                    </Col>
+                                </Row>
+                                <Row className="divider text-center">
+                                    {/* {this.renderSocialLinks(student.socialLinks)} */}
+                                </Row>
                             </Col>
                         </CardBody>
                     </Card>
+                    : ""}
                 </Row>
             </Container>
         );
@@ -99,5 +115,5 @@ SingleStudent.propTypes = {
 };
 
 export default withRouter(connect(state => ({
-    students: state.students
+    students: state.get('students')
 }))(SingleStudent));

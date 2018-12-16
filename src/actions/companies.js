@@ -1,22 +1,23 @@
 import { GET_COMPANIES } from '../actionTypes';
-import api from 'middleware/fetch';
 import store from 'store';
+import axios from 'axios';
+import { API_URL } from '../constants/application';
 
-export const companySuccess = data => ({
-  type: GET_COMPANIES,
-  data
+export const companySuccess = companiesData => ({
+    type: GET_COMPANIES,
+    companiesData
 });
 
 export const fetchCompanies = () =>
   dispatch =>
-    api.get('http://localhost:3000/companies')
-      .then(data => {
-        dispatch(companySuccess(data));
+    axios.get(`${API_URL}/companies`)
+      .then(response => {
+        dispatch(companySuccess(response.data));
       });
 
 export const fetchSingleCompany = (id) =>
       dispatch =>
-        api.get(`http://localhost:3000/companies/${id}`)
-          .then(data => {
-            dispatch(companySuccess(data));
+        axios.get(`${API_URL}/companies/${id}`)
+          .then(response => {
+            dispatch(companySuccess(response.data));
           });

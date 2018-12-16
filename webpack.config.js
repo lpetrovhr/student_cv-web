@@ -36,8 +36,8 @@ module.exports = {
       filename: 'index.html'
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-      __API_URL__: JSON.stringify('localhost:3000/')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      __API_URL__: JSON.stringify(process.env.API_URL)
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     extractCSS,

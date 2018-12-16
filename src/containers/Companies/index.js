@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Row, Col,
+  Row, Col, Container,
   Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button
 } from 'reactstrap';
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchCompanies } from '../../actions/companies';
 import UserCard from 'components/UserCard';
+import store from 'store';
 
 
 
@@ -33,26 +34,32 @@ class Companies extends Component {
           return <p>Trenutno nema poslodavaca!</p>;
       }
 
+      const currentUser = store.get('user');
+      const currentUserRole = currentUser ? currentUser.role : null;
+      const isAdmin = currentUserRole == 20;
+
       return data.map((user, key) =>
-          <UserCard
-              key={key}
-              user={user}
-              type="company"
-          />
+          (user.active || isAdmin) ?
+            <UserCard
+                key={key}
+                user={user}
+                type="company"
+            /> : null 
       );
   }
 
   render() {
 
     const { companies } = this.props;
-    const allCompanies = companies.data;
+    const rawC = companies.toJS();
+    const allCompanies = rawC.companies.data;
 
     return (
-      <div className="animated fadeIn">
+      <Container className="main-container animated fadeIn" fluid>
           <Row>
-              {this.renderUsers(allCompanies)}
+              {allCompanies ? this.renderUsers(allCompanies) : ""}
           </Row>
-      </div>
+      </Container>
     )
   }
 }
@@ -66,5 +73,5 @@ Companies.propTypes = {
 };
 
 export default withRouter(connect(state => ({
-  companies: state.companies
+  companies: state.get('companies')
 }))(Companies));

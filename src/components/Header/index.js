@@ -1,73 +1,82 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { NavLink } from 'react-router-dom';
+
 import {
   Nav,
   NavbarBrand,
   NavbarToggler,
   NavItem,
-  NavLink,
+  NavLink as RsNavlink,
   Badge
 } from 'reactstrap';
 
 import HeaderDropdown from 'components/HeaderDropdown';
 
-class Header extends Component {
+function sidebarToggle(e) {
+  e.preventDefault();
+  document.body.classList.toggle('sidebar-hidden');
+}
 
-  constructor(props) {
-    super(props);
-  }
+function sidebarMinimize(e) {
+  e.preventDefault();
+  document.body.classList.toggle('sidebar-minimized');
+}
 
-  sidebarToggle(e) {
-    e.preventDefault();
-    document.body.classList.toggle('sidebar-hidden');
-  }
+function mobileSidebarToggle(e) {
+  e.preventDefault();
+  document.body.classList.toggle('sidebar-mobile-show');
+}
 
-  sidebarMinimize(e) {
-    e.preventDefault();
-    document.body.classList.toggle('sidebar-minimized');
-  }
+function asideToggle(e) {
+  e.preventDefault();
+  document.body.classList.toggle('aside-menu-hidden');
+}
 
-  mobileSidebarToggle(e) {
-    e.preventDefault();
-    document.body.classList.toggle('sidebar-mobile-show');
-  }
+const Header = (props) => {
+  const { isLogged, user, handdleLogout } = props;
 
-  asideToggle(e) {
-    e.preventDefault();
-    document.body.classList.toggle('aside-menu-hidden');
-  }
-
-  render() {
     return (
       <header className="app-header navbar">
-        <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
+        <NavbarToggler className="d-lg-none" onClick={mobileSidebarToggle}>
           <span className="navbar-toggler-icon"></span>
         </NavbarToggler>
-        <NavbarToggler className="d-md-down-none" onClick={this.sidebarToggle}>
+        <NavbarToggler className="d-md-down-none" onClick={sidebarToggle}>
           <span className="navbar-toggler-icon"></span>
         </NavbarToggler>
-        <Nav className="d-md-down-none" navbar>
-          <HeaderDropdown />
-          
-        </Nav>
-        <Nav className="ml-auto" navbar>
-            <NavItem className="px-3">
-              <NavLink href="/events">Obavijesti</NavLink>
+       
+        {user && user.student ? <strong style={{color: '#20a8d8'}}>{user.student.firstName + ' ' + user.student.lastName}</strong> : ""}
+        {user && user.company ? <strong style={{ color: '#20a8d8' }}>{user.company.companyName}</strong> : ""}
+
+        <Nav className="ml-auto main-navbar" navbar>
+            <NavItem className="px-3 hidden-sm hidden-xs">
+              <NavLink to="/posts">Obavijesti</NavLink>
             </NavItem>
-            <NavItem className="px-3">
-              <NavLink href="/students">Studenti</NavLink>
+            <NavItem className="px-3 hidden-sm hidden-xs">
+              <NavLink to="/students">Studenti</NavLink>
             </NavItem>
-            <NavItem className="px-3">
-              <NavLink href="/companies">Poslodavci</NavLink>
+            <NavItem className="px-3 hidden-sm hidden-xs">
+              <NavLink to="/companies">Poslodavci</NavLink>
             </NavItem>
-            <NavItem className="px-3">
-              <NavLink href="/logout"><i className="icon-logout"></i> Odjava</NavLink>
-            </NavItem>
+            {isLogged ? 
+              <NavItem className="px-3">
+                <NavLink to="" onClick={handdleLogout}><i className="icon-logout"></i> Odjava</NavLink>
+              </NavItem> : 
+              <NavItem className="px-3">
+                <NavLink to="/login"><i className="icon-login"></i> Prijava/Registracija</NavLink>
+              </NavItem>
+            }
+            
         </Nav>
       </header>
     );
   }
-}
+
+Header.propTypes = {
+  isLogged: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+  handdleLogout: PropTypes.func,
+};
 
 export default Header;

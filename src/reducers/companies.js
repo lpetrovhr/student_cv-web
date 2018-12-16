@@ -1,13 +1,18 @@
 import { GET_COMPANIES } from '../actionTypes';
+import { fromJS } from 'immutable';
 
-const initialState = {
-  data: []
+function initialState() {
+  return fromJS({
+    companies: [],
+  });
 };
 
-export default (state = initialState, action) => {
+export default (state = initialState(), action) => {
+  const { companiesData } = action;
   switch (action.type) {
     case GET_COMPANIES:
-      return action.data;
+      return state
+        .set('companies', fromJS(companiesData));
     default:
       return state;
   }

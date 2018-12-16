@@ -22,7 +22,7 @@ button {
 .btn-flickr,
 .btn-tumblr,
 .btn-xing,
-.btn-github,
+.btn-git,
 .btn-html5,
 .btn-openid,
 .btn-stack-overflow,
@@ -204,12 +204,12 @@ button {
   }
 }
 
-.btn-github {
+.btn-git {
   $color: $github;
 
   background: $color;
   &::before {
-    content: "\f09b";
+    content: "\f126";
     background: darken($color, 5%);
 
   }

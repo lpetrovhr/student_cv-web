@@ -1,43 +1,46 @@
-import 'whatwg-fetch'
+import 'whatwg-fetch';
+import store from 'store';
+import { browserHistory } from 'react-router';
 
-const jsonParser = response => 
-  response.json()
-    .then(body => ({ response, body }))
+const defaultHeaders = () => ({
+  Authorization: store.get('token') || '',
+  'Content-Type': 'application/json',
+});
 
-
-const handler = ({ response, body = {} }) => {
-  console.log(body)
-  if (body.error) {
-    const error = new Error(body.error)
-    error.code = body.code
-    error.status = body.status || response.status
-    throw error
+export const mergeDefaults = (options = {}) => {
+  const headers = defaultHeaders();
+  if (options.noAuth) {
+    delete headers.Authorization;
   }
+  if (options.body instanceof FormData) delete headers['Content-Type'];
+  return Object.assign({}, options, {
+    headers: Object.assign({}, headers, options.headers || {}),
+  });
+};
 
-  if (response.status < 200 || response.status >= 300) {
-    const error = new Error(response.statusText)
-    error.status = response.status
-    throw error
-  }
+export default function (url, options) {
+  return new Promise((resolve, reject) => {
+    const resolveRequest = response => response.json().then(resolve);
+    const rejectRequest = response => response.json().then((err) => {
+      const error = new Error(err.message);
+      Object.assign(error, err);
+      return reject(error);
+    });
 
-  return body
-}
-
-const errorHandler = (error) => {
-
-  throw error
-}
-
-function fetchApi (path) {
-  return fetch(path)
-    .then(jsonParser)
-    .then(handler)
-    .catch(errorHandler)
-}
-
-const getApi = path =>
-  fetchApi(path)
-
-export default {
-  get: getApi,
+    return fetch(url, mergeDefaults(options))
+      .then((response) => {
+        if (response.ok) return resolveRequest(response);
+        switch (response.status) {
+          case 401:
+            store.remove('token');
+            browserHistory.push('/login');
+            return rejectRequest(response);
+          default:
+            return rejectRequest(response);
+        }
+      })
+      .catch(() =>
+        reject('Network error!'),
+    );
+  });
 }

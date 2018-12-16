@@ -16,14 +16,19 @@ export default {
     },
     {
       name: 'Profil',
-      url: '/user/edit',
+      url: '/student/edit',
       icon: 'icon-pencil',
     },
     {
-      name: 'Životopis',
-      url: '/user/cv',
-      icon: 'icon-docs',
+      name: 'Dodaj obavijest',
+      url: '/posts/new',
+      icon: 'icon-plus',
     },
+    {
+      name: 'Moje obavijesti',
+      url: '/posts/self',
+      icon: 'icon-person',
+    },  
     {
       title: true,
       name: 'Posao',
@@ -39,8 +44,8 @@ export default {
     },
     {
       name: 'Obavijesti',
-      url: '/events',
-      icon: 'icon-bell',
+      url: '/posts',
+      icon: 'icon-paper-plane',
     },
     {
       name: 'Studenti',
