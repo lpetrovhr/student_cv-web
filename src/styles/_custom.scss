@@ -215,3 +215,20 @@ span {
   color: red;
   font-weight: bold;
 }
+
+.image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 20px 0 20px 20px;
+}
+
+.profile-pic {
+    display: inline;
+    margin: 0 auto;
+    margin-left: -25%; //centers the image
+    height: 100%;
+    width: auto;
+}

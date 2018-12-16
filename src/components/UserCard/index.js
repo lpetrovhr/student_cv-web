@@ -12,7 +12,14 @@ const UserCard = ({ user, key, type }) => (
     type == 'company' ?
     <Col md="4">
         <Card>
-            <CardImg className="img-square img-responsive" top width="100%" src={require(`assets/images/avatars/microsoft-test.jpg`)} alt="Card image cap" />
+            <div className="image-cropper img-responsive" width="100%" style={{ margin: "10px auto" }}>
+                {
+                    user.profilePicture ?
+                        <img className="profile-pic" src={user.profilePicture}></img>
+                        :
+                        <img className="profile-pic" style={{ marginLeft: "0" }} src={require(`assets/images/avatars/test.png`)}></img>
+                }
+            </div>
             <CardBody>
                 <CardTitle>{user.companyName}</CardTitle>
                 <CardText style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{user.info}</CardText>
@@ -22,7 +29,14 @@ const UserCard = ({ user, key, type }) => (
     </Col> : 
     <Col md="4">
         <Card>
-            <CardImg className="img-square img-responsive" top width="100%" src={require(`assets/images/avatars/test.png`)} alt="Card image cap" />
+            <div className="image-cropper img-responsive" width="100%" style={{ margin: "10px auto" }}>
+                {
+                    user.profilePicture ?
+                    <img className="profile-pic" src={user.profilePicture}></img>
+                    :
+                    <img className="profile-pic" style={{ marginLeft: "0" }} src={require(`assets/images/avatars/test.png`)}></img>
+                }
+            </div>
             <CardBody>
                 <CardTitle>{user.firstName} {user.lastName}</CardTitle>
                 <CardText>{user.cvLink ? user.cvLink : 'Student trenutno nema životopis'}</CardText>

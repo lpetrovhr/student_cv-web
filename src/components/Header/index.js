@@ -46,8 +46,8 @@ const Header = (props) => {
           <span className="navbar-toggler-icon"></span>
         </NavbarToggler>
        
-        {user && user.student ? <strong style={{color: '#20a8d8'}}>{user.student.firstName + ' ' + user.student.lastName}</strong> : ""}
-        {user && user.company ? <strong style={{ color: '#20a8d8' }}>{user.company.companyName}</strong> : ""}
+        {user && user.student && user.student.firstName ? <strong style={{color: '#20a8d8'}}>{user.student.firstName + ' ' + user.student.lastName}</strong> : ""}
+        {user && user.company && user.company.companyName ? <strong style={{ color: '#20a8d8' }}>{user.company.companyName}</strong> : ""}
 
         <Nav className="ml-auto main-navbar" navbar>
             <NavItem className="px-3 hidden-sm hidden-xs">

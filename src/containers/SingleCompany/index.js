@@ -72,14 +72,14 @@ class SingleCompany extends Component {
                 <Container className="main-container" fluid>
                     <Row>
                     {company ?
-                        <Card>
+                        <Card style={{ width: "60%" }}>
                             <CardTitle className="card-header">{company.companyName}</CardTitle>
                             <CardBody>
                                 <Col md={12}>
                                     <Row>
                                         <Col xs={12} sm={3} md={3} className="text-center">
-                                            <figure>
-                                                <img src={require(`assets/images/avatars/test.jpg`)} alt="" className="img-circle img-responsive" />
+                                            <figure className="image-cropper" style={{ margin: "0" }}>
+                                                {company.profilePicture ? <img src={company.profilePicture} alt="" className="profile-pic" /> : <img src={require(`assets/images/avatars/test.png`)} alt="" style={{ marginLeft: "0" }} className="profile-pic" />}
                                             </figure>
                                         </Col>
                                         <Col xs={12} sm={8}>

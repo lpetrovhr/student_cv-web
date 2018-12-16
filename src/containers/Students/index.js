@@ -87,6 +87,7 @@ class Students extends Component {
     const rawStudents = students.toJS();
     const rawCategories = categories.toJS();
     const allStudents = rawStudents.students.data;
+    console.log(allStudents);
     const allCategories = rawCategories ? rawCategories.categories.data : {};
 
     return (

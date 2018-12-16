@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchSingleStudent } from '../../actions/students';
-import { getCurrentProfile, updateCompanyById, addUserTag, removeUserTag } from '../../actions/profile';
+import { getCurrentProfile, updateCompanyById, addUserTag, updateUserImage, removeUserTag } from '../../actions/profile';
 import { fetchCategories, fetchSocial, fetchTags } from '../../actions/categories';
 import { zipCodes } from '../../constants/zip_codes';
 
@@ -40,6 +40,8 @@ class CompanyEdit extends Component {
         this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
         this.onTagsAddClick = this.onTagsAddClick.bind(this);
         this.removeUserTag = this.removeUserTag.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
+        this.onImageChange = this.onImageChange.bind(this);
     }
 
     componentWillMount() {
@@ -133,6 +135,21 @@ class CompanyEdit extends Component {
         dispatch(removeUserTag(currentUser.id, tagId)).then(() => { this.getUserData(); });
     }
 
+    uploadImage() {
+        const fd = new FormData();
+        fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
+        const { dispatch } = this.props;
+        const currentUser = store.get('user');
+        console.log(fd);
+        return dispatch(updateUserImage(currentUser.id, fd)).then(dispatch(getCurrentProfile(currentUser.id)));
+    }
+
+    onImageChange(e) {
+        console.log(e.target.files[0]);
+        this.setState({ selectedFile: e.target.files[0] });
+    }
+
+
     render() {
 
         const { profile, categories } = this.props;
@@ -191,8 +208,17 @@ class CompanyEdit extends Component {
                         </Card>
                         <Card>
                             <CardTitle className="card-header">Fotografija</CardTitle>
-                            <CardBody>
-                            </CardBody>
+                            <Row>
+                                <Col xs={12} sm={3} md={3} className="text-center">
+                                    <figure className="image-cropper">
+                                        {currentUser.company && currentUser.company.profilePicture ? <img src={currentUser.company.profilePicture} alt="" className="profile-pic" /> : <img src={require(`assets/images/avatars/test.png`)} alt="" style={{ margin: '20px' }} className="img-circle img-responsive" />}
+                                    </figure>
+                                </Col>
+                                <Col xs={12} sm={6} md={6} style={{ marginTop: '20px' }}>
+                                    <input type="file" name="myImage" onChange={this.onImageChange} style={{ marginBottom: '10px' }} />
+                                    <Button type="submit" color="primary" onClick={this.uploadImage}>Promjeni fotografiju</Button>
+                                </Col>
+                            </Row>
                         </Card>
                     </Col>
                 </Row>

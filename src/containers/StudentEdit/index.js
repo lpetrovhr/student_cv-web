@@ -223,13 +223,12 @@ class StudentEdit extends Component {
                             <CardTitle className="card-header">Fotografija</CardTitle>
                             <Row>
                                 <Col xs={12} sm={3} md={3} className="text-center">
-                                    <figure>
-                                        <img src={require(`assets/images/avatars/test.jpg`)} alt="" style={{ margin: '20px' }} className="img-circle img-responsive" />
+                                    <figure className="image-cropper">
+                                        {currentUser.student ? <img src={currentUser.student.profilePicture} alt="" className="profile-pic" /> : <img src={require(`assets/images/avatars/test.jpg`)} alt="" style={{ margin: '20px' }} className="img-circle img-responsive" />}
                                     </figure>
-                                    <figure>
-                                        {currentUser.student ? <img src={'http://localhost:3000/' + currentUser.student.profilePicture} alt="" className="img-circle img-responsive" /> : ''}
-                                    </figure>
-                                    <input type="file" name="myImage" onChange={this.onImageChange} />
+                                </Col>
+                                <Col xs={12} sm={6} md={6} style={{ marginTop: '20px' }}>
+                                    <input type="file" name="myImage" onChange={this.onImageChange} style={{ marginBottom: '10px' }} />
                                     <Button type="submit" color="primary" onClick={this.uploadImage}>Promjeni fotografiju</Button>
                                 </Col>
                             </Row>

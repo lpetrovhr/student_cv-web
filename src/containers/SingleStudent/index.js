@@ -70,14 +70,14 @@ class SingleStudent extends Component {
             <Container className="main-container" fluid>
                 <Row>
                     {student ?
-                    <Card>
+                    <Card style={{ width: "60%" }}>
                         <CardTitle className="card-header">{student.firstName} {student.lastName}</CardTitle>
                         <CardBody>
                             <Col md={12}>
                                 <Row>
                                     <Col xs={12} sm={3} md={3} className="text-center">
-                                        <figure>
-                                            <img src={require(`assets/images/avatars/test.png`)} alt="" className="img-circle img-responsive" />
+                                        <figure className="image-cropper" style={{ margin: "0" }}>
+                                                {student.profilePicture ? <img src={student.profilePicture} alt="" className="profile-pic" /> : <img src={require(`assets/images/avatars/test.png`)} alt=""  style={{ marginLeft: "0" }} className="profile-pic" />}
                                         </figure>
                                     </Col>
                                     <Col xs={12} sm={8}>
