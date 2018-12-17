@@ -39,7 +39,7 @@ const UserCard = ({ user, key, type }) => (
             </div>
             <CardBody>
                 <CardTitle>{user.firstName} {user.lastName}</CardTitle>
-                <CardText>{user.cvLink ? user.cvLink : 'Student trenutno nema životopis'}</CardText>
+                    <CardText>{user.cvLink ? <a href={user.cvLink} target="__blank">Pogledaj životopis</a> : 'Student trenutno nema životopis'}</CardText>
                 <Link to={`/students/${user.id}`}><Button color="primary" block outline>Info</Button></Link>
             </CardBody>
         </Card>
