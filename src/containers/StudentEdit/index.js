@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { fetchSingleStudent } from '../../actions/students';
-import { getCurrentProfile, updateStudentById, updateSocialCategories, updateUserImage, addUserTag, removeUserTag } from '../../actions/profile';
+import { updateUserCv, getCurrentProfile, updateStudentById, updateSocialCategories, updateUserImage, addUserTag, removeUserTag } from '../../actions/profile';
 import { fetchCategories, fetchSocial, fetchTags } from '../../actions/categories';
 import SocialForm from 'components/SocialForm';
 
@@ -44,6 +44,8 @@ class StudentEdit extends Component {
         this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
         this.onTagsAddClick = this.onTagsAddClick.bind(this);
         this.removeUserTag = this.removeUserTag.bind(this);
+        this.onCvChange = this.onCvChange.bind(this);
+        this.uploadCv = this.uploadCv.bind(this);
     }
 
     componentWillMount() {
@@ -106,6 +108,20 @@ class StudentEdit extends Component {
     onImageChange(e) {
         console.log(e.target.files[0]);
         this.setState({ selectedFile: e.target.files[0] });
+    }
+
+    onCvChange(e) {
+        console.log(e.target.files[0]);
+        this.setState({ selectedFile: e.target.files[0] });
+    }
+
+    uploadCv() {
+        const fd = new FormData();
+        fd.append('image', this.state.selectedFile, this.state.selectedFile.name);
+        const { dispatch } = this.props;
+        const currentUser = store.get('user');
+        console.log(fd);
+        return dispatch(updateUserCv(currentUser.id, fd)).then(dispatch(getCurrentProfile(currentUser.id)));
     }
 
     getSuggestions(value) {
@@ -230,6 +246,15 @@ class StudentEdit extends Component {
                                 <Col xs={12} sm={6} md={6} style={{ marginTop: '20px' }}>
                                     <input type="file" name="myImage" onChange={this.onImageChange} style={{ marginBottom: '10px' }} />
                                     <Button type="submit" color="primary" onClick={this.uploadImage}>Promjeni fotografiju</Button>
+                                </Col>
+                            </Row>
+                        </Card>
+                        <Card>
+                            <CardTitle className="card-header">Životopis</CardTitle>
+                            <Row>
+                                <Col xs={12} sm={6} md={6} style={{ marginTop: '20px', marginLeft: '20px', marginBottom: '20px' }}>
+                                    <input type="file" name="myImage" onChange={this.onCvChange} style={{ marginBottom: '10px' }} />
+                                    <Button type="submit" color="primary" onClick={this.uploadCv}>Spremi životopis</Button>
                                 </Col>
                             </Row>
                         </Card>

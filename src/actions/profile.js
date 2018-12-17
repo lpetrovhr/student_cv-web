@@ -66,7 +66,18 @@ export const addSocialCategories = (id, values) =>
 
 export const updateUserImage = (id, values) =>
     dispatch =>
-        axios.post(`${API_URL}/user/${id}/upload`, values)
+        axios.post(`${API_URL}/user/${id}/upload/image`, values)
+            .then(response => {
+                const currentUser = store.get('user');
+                currentUser.student = response.data.data;
+                store.set('user', currentUser);
+                dispatch(profileFetchSuccess(currentUser));
+            })
+            .catch(err => Promise.reject(parseErrors(err)));
+
+export const updateUserCv = (id, values) =>
+    dispatch =>
+        axios.post(`${API_URL}/user/${id}/upload/cv`, values)
             .then(response => {
                 const currentUser = store.get('user');
                 currentUser.student = response.data.data;
