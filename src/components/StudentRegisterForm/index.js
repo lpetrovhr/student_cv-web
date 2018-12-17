@@ -43,6 +43,7 @@ const StudentRegisterForm = props => {
           
             {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <Button type="submit" color="success" disabled={submitting} block>Izradi račun</Button>
+            <Link to="/login"><Button style={{ width: "100%" }} color="primary" className="mt-3" active>Povratak na stranicu za prijavu</Button></Link>
         </Form>
     )
 };

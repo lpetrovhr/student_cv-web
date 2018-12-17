@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form/immutable';
 import FormInput from 'components/FormInput';
 import PrependFormInput from 'components/PrependFormInput';
+import { Link } from 'react-router-dom';
 
 import { Container, Row, Col, CardGroup, Card, CardBody, Button, Input, InputGroup, InputGroupAddon, InputGroupText, Form, FormGroup, FormControl } from 'reactstrap';
 
@@ -41,6 +42,9 @@ const LoginForm = props => {
                     </Col>
                     <Col xs="6" className="text-right">
                         <Button color="link" className="px-0">Zaboravili ste lozinku?</Button>
+                    </Col>
+                    <Col xs="12">
+                        <Link to="/"><Button style={{ width: "100%" }} color="success" className="mt-3" active>Povratak na početnu stranicu</Button></Link>
                     </Col>
                 </Row>
             </Form>

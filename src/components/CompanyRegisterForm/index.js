@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form/immutable';
 import PrependFormInput from 'components/PrependFormInput';
+import { Link } from 'react-router-dom';
 
 import { Container, Row, Col, CardGroup, Card, CardBody, Button, Input, InputGroup, InputGroupAddon, InputGroupText, Form, FormGroup, FormControl } from 'reactstrap';
 import { isEmail, isPassword, isRequired, isSamePassword, isIndetificationNumber } from '../../middleware/validator';
@@ -54,6 +55,7 @@ const CompanyRegisterForm = props => {
             {error && <ErrorMsg>{errorMessage}</ErrorMsg>}
 
             <Button type="submit" color="success" disabled={submitting} block>Izradi račun</Button>
+            <Link to="/login"><Button style={{ width: "100%" }} color="primary" className="mt-3" active>Povratak na stranicu za prijavu</Button></Link>
         </Form>
     )
 };
