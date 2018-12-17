@@ -97,10 +97,8 @@ class AddPost extends Component {
         const { posts, profile, handleSubmit, submitSucceeded, submitting, error } = this.props;
         const rawPosts = posts.toJS();
         const rawProfile = profile.toJS();
-        const postTypes = rawPosts.postTypes.data;
-        const postCategories = rawPosts.postCategories.data;
-
-        console.log(postCategories);
+        const postTypes = rawPosts.postTypes ? rawPosts.postTypes.data : null;
+        const postCategories = rawPosts.postCategories ? rawPosts.postCategories.data : null;
 
         return (
             <Container className="main-container" fluid>

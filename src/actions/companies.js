@@ -21,3 +21,10 @@ export const fetchSingleCompany = (id) =>
           .then(response => {
             dispatch(companySuccess(response.data));
           });
+
+export const fetchCompanySearchResults = (name, tag, category) =>
+      dispatch =>
+        axios.get(`${API_URL}/companies/search?name=${name}&tag=${tag}&category=${category}`)
+          .then(response => {
+            dispatch(companySuccess(response.data));
+          });

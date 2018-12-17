@@ -17,7 +17,6 @@ class LoginComponent extends Component {
     onFormSubmit(values) {
         const { dispatch, history } = this.props;
         const submitedValues = values.toJS();
-        console.log(submitedValues);
 
         return dispatch(loginFetch(submitedValues)).then(() => { history.push('/') });
     }

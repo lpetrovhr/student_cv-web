@@ -22,6 +22,7 @@ import ErrorMsg from 'components/ErrorMessage';
 import SuccessMessage from 'components/SuccessMessage';
 
 import 'react-datepicker/dist/react-datepicker.css';
+// import { start } from 'repl';
 
 export const validate = (values) => {
     const errors = {};
@@ -53,7 +54,17 @@ class PostEdit extends Component {
     componentWillMount() {
         this.getPostTypes();
         this.getPostCategories();
-        this.getPost();
+        this.getPost().then(() => {
+            const { posts } = this.props;
+            const rawPosts = posts.toJS();
+            const startD = rawPosts.posts.data ? moment(rawPosts.posts.data.startDate) : {};
+            const endD = rawPosts.posts.data ? moment(rawPosts.posts.data.endDate) : {};
+
+            this.setState({
+                startDate: startD,
+                endDate: endD
+            });
+        });
     }
 
     getPostTypes() {
@@ -107,9 +118,8 @@ class PostEdit extends Component {
         const { posts, profile, handleSubmit, submitSucceeded, submitting, error } = this.props;
         const rawPosts = posts.toJS();
         const rawProfile = profile.toJS();
-        const postTypes = rawPosts.postTypes.data;
-        const postCategories = rawPosts.postCategories.data;
-        console.log(rawPosts);
+        const postTypes = rawPosts.postTypes ? rawPosts.postTypes.data : null;
+        const postCategories = rawPosts.postCategories ? rawPosts.postCategories.data :null;
 
         return (
             <Container className="main-container" fluid>
@@ -117,7 +127,7 @@ class PostEdit extends Component {
 
                     <Col md={12}>
                         <Card>
-                            <CardTitle className="card-header">Dodajte novu obavijest</CardTitle>
+                            <CardTitle className="card-header">Uredi obavijest</CardTitle>
                             <CardBody>
                                 {postTypes && postCategories ?
                                     <Container>
@@ -150,13 +160,13 @@ class PostEdit extends Component {
                                                     <FormGroup row>
                                                         <Label sm={2}>Početak</Label>
                                                         <Col sm={10}>
-                                                            <DatePicker timeFormat="HH:mm" timeCaption="Vrijeme" showTimeSelect locale="hr-HR" selected={this.state.startDate} onChange={this.handleStartDate} />
+                                                            <DatePicker name="startDate" timeFormat="HH:mm" timeCaption="Vrijeme" showTimeSelect locale="hr-HR" selected={this.state.startDate} onChange={this.handleStartDate} />
                                                         </Col>
                                                     </FormGroup>
                                                     <FormGroup row>
                                                         <Label sm={2}>Kraj</Label>
                                                         <Col sm={10}>
-                                                            <DatePicker timeFormat="HH:mm" timeCaption="Vrijeme" showTimeSelect locale="hr-HR" selected={this.state.endDate} onChange={this.handleEndDate} />
+                                                            <DatePicker name="endDate" timeFormat="HH:mm" timeCaption="Vrijeme" showTimeSelect locale="hr-HR" selected={this.state.endDate} onChange={this.handleEndDate} />
                                                         </Col>
                                                     </FormGroup>
                                                     <FormGroup row>
@@ -168,7 +178,7 @@ class PostEdit extends Component {
                                                         </Col>
                                                     </FormGroup>
                                                     <FormGroup row>
-                                                        <Button type="submit" color="primary" disabled={submitting}>Dodaj obavijest</Button>
+                                                        <Button type="submit" color="primary" disabled={submitting}>Spremi promjene</Button>
                                                     </FormGroup>
                                                 </Form>
                                             </Col>

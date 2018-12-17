@@ -33,7 +33,6 @@ class Students extends Component {
 
   getAllCategories() {
     const { dispatch } = this.props;
-
     return dispatch(fetchCategories());
   }
   
@@ -86,9 +85,8 @@ class Students extends Component {
     const { students, categories } = this.props;
     const rawStudents = students.toJS();
     const rawCategories = categories.toJS();
-    const allStudents = rawStudents.students.data;
-    console.log(allStudents);
-    const allCategories = rawCategories ? rawCategories.categories.data : {};
+    const allStudents = rawStudents.students ? rawStudents.students.data : null;
+    const allCategories = rawCategories.categories ? rawCategories.categories.data : null;
 
     return (
       <Container className="main-container animated fadeIn" fluid>

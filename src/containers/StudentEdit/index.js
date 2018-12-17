@@ -171,7 +171,7 @@ class StudentEdit extends Component {
         const rawCategories = categories.toJS();
         const currentUser = rawProfile.data ? rawProfile.data.user : {};
         const allCategories = rawCategories ? rawCategories.categories.data : {};
-        const social = rawCategories ? rawCategories.social.data : {};
+        const social = rawCategories.social ? rawCategories.social.data : {};
         const tags = currentUser.student ? currentUser.student.tags : null;
 
         const inputProps = {

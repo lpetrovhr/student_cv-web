@@ -157,7 +157,7 @@ class CompanyEdit extends Component {
         const rawProfile = profile.toJS();
         const currentUser = rawProfile.data ? rawProfile.data.user : {};
         const rawCategories = categories.toJS();
-        const allCategories = rawCategories ? rawCategories.categories.data : {};
+        const allCategories = rawCategories.categories ? rawCategories.categories.data : null;
         const tags = currentUser.company ? currentUser.company.tags : null;
 
         const inputProps = {
