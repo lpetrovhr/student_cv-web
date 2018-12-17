@@ -61,9 +61,9 @@ class CompanyEdit extends Component {
         const { dispatch } = this.props;
 
         const currentUser = store.get('user');
-        const formValues = values.toJS();
+        let formValues = values.toJS();
 
-        formValues.zipCode = zipCodes[formValues.zipCode];
+        formValues['zipCode'] = zipCodes[formValues.zipCode];
         return dispatch(updateCompanyById(formValues, currentUser.id)).then(dispatch(getCurrentProfile(currentUser.id)));
     }
 

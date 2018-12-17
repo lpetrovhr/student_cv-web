@@ -3,7 +3,7 @@ import { Row, Col, Container, Card, CardImg, CardText, CardBody, CardHeader, Car
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { fetchPosts, fetchPostTypes } from '../../actions/posts';
+import { fetchPosts, fetchPostTypes, fetchPostsByType } from '../../actions/posts';
 import UserCard from 'components/UserCard';
 
 import moment from 'moment';
@@ -14,6 +14,7 @@ class Posts extends Component {
         super();
         this.getAllPosts = this.getAllPosts.bind(this);
         this.getPostTypes = this.getPostTypes.bind(this);
+        this.filterPostTypes = this.filterPostTypes.bind(this);
     }
 
     componentWillMount() {
@@ -58,8 +59,13 @@ class Posts extends Component {
         }
 
         return data.map((postType, key) => 
-            <Button key={key} className={postType.name.toLowerCase()} size="lg">{postType.name}</Button>
+            <Button key={key} id={postType.id} className={postType.name.toLowerCase()} size="lg" onClick={this.filterPostTypes}>{postType.name}</Button>
         );
+    }
+
+    filterPostTypes (e) {
+        const { dispatch } = this.props;
+        dispatch(fetchPostsByType(e.target.id));
     }
 
     render() {
@@ -67,7 +73,8 @@ class Posts extends Component {
         const { posts } = this.props;
         const rawPosts = posts.toJS();
         const allPosts = rawPosts.posts.data;
-        const postTypes = rawPosts.postTypes.data;
+        const postTypes = rawPosts.postTypes ? rawPosts.postTypes.data : null;
+        console.log(postTypes);
 
         return (
             <Container className="main-container animated fadeIn" fluid>

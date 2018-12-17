@@ -26,7 +26,7 @@ export const userUpdateSuccess = () => ({
 
 export const fetchAllUsers = () =>
     dispatch =>
-        axios.get(__API_URL__, headers)
+        axios.get(`${API_URL}/users`, headers)
             .then(response =>{
                 dispatch(usersFetchSuccess(response.data))}
             );

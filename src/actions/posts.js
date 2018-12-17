@@ -25,6 +25,13 @@ export const fetchPosts = () =>
                 dispatch(postSuccess(response.data));
             });
 
+export const fetchPostsByType = (typeId) =>
+    dispatch =>
+        axios.get(`${API_URL}/posts/type/${typeId}`)
+            .then(response => {
+                dispatch(postSuccess(response.data));
+            });
+
 export const fetchSinglePost = id =>
     dispatch =>
         axios.get(`${API_URL}/posts/${id}`)

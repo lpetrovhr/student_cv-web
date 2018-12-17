@@ -81,9 +81,9 @@ class AdminUsers extends Component {
     render() {
         const { user } = this.props;
         const allUsers = user && user.toJS().user ? user.toJS().user.data : null;
-
-        const students = allUsers ? allUsers.filter(user => user.role == 0) : {};
-        const companies = allUsers ? allUsers.filter(user => user.role == 10) : {};
+        console.log(allUsers);
+        const students = allUsers ? allUsers.filter(user => user.role == 0) : null;
+        const companies = allUsers ? allUsers.filter(user => user.role == 10) : null;
 
         return (
             <Container className="main-container animated fadeIn" fluid>
